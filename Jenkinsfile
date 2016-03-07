@@ -1,7 +1,8 @@
 node('jdk8')
 {
-   env.PATH="${tool 'mvn-3.3.3.x'}/bin:${env.PATH}"
    stage 'development'
+   checkout scm
+   env.PATH="${tool 'mvn-3.3.3-x'}/bin:${env.PATH}"
    sh 'mvn clean install'
 }
 
