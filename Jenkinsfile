@@ -1,4 +1,4 @@
-env.PATH="${tool 'Maven 3.x'}/bin:${env.PATH}"
+env.PATH="${tool 'mvn 3.3.3.x'}/bin:${env.PATH}"
 stage 'development'
 	
 	sh 'mvn clean install'
