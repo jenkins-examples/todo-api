@@ -1,13 +1,17 @@
-env.PATH="${tool 'mvn 3.3.3.x'}/bin:${env.PATH}"
-stage 'development'
-	
-	sh 'mvn clean install'
+node('jdk8')
+{
+   env.PATH="${tool 'mvn 3.3.3.x'}/bin:${env.PATH}"
+   stage 'development'
+   sh 'mvn clean install'
+}
 
-stage 'quality-analysis'
+node('jdk8')
+{
+    stage 'quality-analysis'
 
 	checkpoint('Sonar  - Complete')
 
-stage 'quality-assurance'
+    stage 'quality-assurance'
 
 	parallel(integrationTests: {
         runWithServer {url ->
@@ -20,11 +24,13 @@ stage 'quality-assurance'
     })
 
     checkpoint('Integration and Functional Tests - Complete')
+}
 
-    input message: "QA Team Approval?"
+
+input message: "QA Team Approval?"
 
 stage 'performance'
 
-	checkpoint('Performance Tests - Complete')
+checkpoint('Performance Tests - Complete')
 
 stage 'production'
